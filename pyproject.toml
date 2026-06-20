@@ -1,0 +1,12 @@
+[project]
+name = "tide-app"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = [
+    "astral",
+    "matplotlib",
+    "numpy",
+    "pillow",
+    "requests",
+    "scipy",
+]

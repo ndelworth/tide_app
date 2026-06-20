@@ -1,0 +1,7 @@
+plots/
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.log
+lib/waveshare_epd/
