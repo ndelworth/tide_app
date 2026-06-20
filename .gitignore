@@ -5,3 +5,4 @@ __pycache__/
 .env
 *.log
 lib/waveshare_epd/
+.DS_Store
