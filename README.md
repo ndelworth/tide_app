@@ -41,7 +41,7 @@ while true; do bash update_tide.sh; sleep 600; done
 ```
 Detach with `Ctrl-B D`. To check on it later: `tmux attach -t tide`.
 
-**6. Powering off**
+**5. Powering off**
 
 Before shutting the Pi down, clear the screen to avoid ghosting:
 ```bash
