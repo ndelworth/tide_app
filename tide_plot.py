@@ -8,10 +8,6 @@ from zoneinfo import ZoneInfo
 from astral import LocationInfo
 from astral.sun import sun
 
-
-# --- Banner message (set to "" to disable) ---
-BANNER = "HAPPY FATHER'S DAY, DAD!"
-
 # --- Station config ---
 STATION_ID   = "64b6e5ec8027cb190816a0c0"
 STATION_NAME = "Point-du-Chêne"
@@ -34,6 +30,24 @@ EXTREMA_LABEL_OFFSET = 0.07
 EXTREMA_FONT_SIZE    = 14
 TICK_FONT_SIZE       = 20
 
+# --- Banner message (for displaying fun secret messages, like "Happy Father's Day!") ---
+# BANNER_URL is loaded from config.py (not committed to git).
+# Edit the gist content to change the message; set it to empty to disable.
+try:
+    from config import BANNER_URL
+except ImportError:
+    BANNER_URL = None
+
+
+def fetch_banner():
+    if not BANNER_URL:
+        return ""
+    try:
+        response = requests.get(BANNER_URL, timeout=5)
+        response.raise_for_status()
+        return response.text.strip()
+    except Exception:
+        return ""  # if the fetch fails, just show no banner
 
 def get_tide_data(now):
     start = now - timedelta(hours=24)
@@ -152,8 +166,9 @@ def get_tide_plot():
     current_time_str = f"Updated: {now_local.strftime('%Y-%m-%d %I:%M %p').lstrip('0')}"
     fig.text(0.98, 0.97, current_time_str, ha='right', va='top', fontsize=10, fontweight='bold')
 
-    if BANNER:
-        fig.text(0.02, 0.97, BANNER, ha='left', va='top', fontsize=12, fontweight='bold')
+    banner = fetch_banner()
+    if banner:
+        fig.text(0.02, 0.97, banner, ha='left', va='top', fontsize=12, fontweight='bold')
 
     ax.spines['bottom'].set_visible(False)
     ax.spines['top'].set_visible(False)

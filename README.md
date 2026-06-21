@@ -24,6 +24,10 @@ mkdir -p lib
 # Note: "RaspberryPi_JetsonNano" is just the name of the directory in Waveshare's repo —
 # this works on any Raspberry Pi model.
 cp -r /tmp/e-paper-lib/RaspberryPi_JetsonNano/python/lib/waveshare_epd lib/
+
+# The 10.85" driver and a compatible epdconfig aren't in the main repo yet — grab them separately:
+wget https://raw.githubusercontent.com/czuryk/Waveshare-ePaper-10.85-demo/main/lib/waveshare_epd/epd10in85.py -P lib/waveshare_epd/
+wget https://raw.githubusercontent.com/czuryk/Waveshare-ePaper-10.85-demo/main/lib/waveshare_epd/epdconfig.py -O lib/waveshare_epd/epdconfig.py
 ```
 
 **3. Enable SPI on the Pi**
@@ -31,7 +35,14 @@ cp -r /tmp/e-paper-lib/RaspberryPi_JetsonNano/python/lib/waveshare_epd lib/
 sudo raspi-config  # Interface Options → SPI → Enable
 ```
 
-**4. Start it running in a tmux session**
+**4. Set up config.py**
+
+```bash
+cp config.py.example ~/tide_app/config.py
+```
+Then edit `config.py` and fill in your `BANNER_URL`. If you don't want a banner, leave `BANNER_URL = None`.
+
+**5. Start it running in a tmux session**
 ```bash
 tmux new -s tide
 cd ~/tide_app
@@ -39,7 +50,7 @@ while true; do bash update_tide.sh; sleep 600; done
 ```
 Detach with `Ctrl-B D`. To check on it later: `tmux attach -t tide`.
 
-**5. Powering off**
+**6. Powering off**
 
 Before shutting the Pi down, clear the screen to avoid ghosting:
 ```bash

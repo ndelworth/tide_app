@@ -6,3 +6,4 @@ __pycache__/
 *.log
 lib/waveshare_epd/
 .DS_Store
+config.py
