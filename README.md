@@ -47,6 +47,23 @@ python3 epaper_display.py --clear
 sudo shutdown -h now
 ```
 
+## Troubleshooting
+
+**`ModuleNotFoundError: No module named 'waveshare_epd'`**
+The Waveshare library isn't installed. Follow step 2 above.
+
+**`cannot import name 'epd10in85' from 'waveshare_epd'`**
+The `epd10in85` driver isn't included in the main Waveshare repo. Grab it from the community fork:
+```bash
+wget https://raw.githubusercontent.com/czuryk/Waveshare-ePaper-10.85-demo/main/lib/waveshare_epd/epd10in85.py -P ~/tide_app/lib/waveshare_epd/
+```
+
+**`AttributeError: module 'waveshare_epd.epdconfig' has no attribute 'RST_PIN'`**
+The `epdconfig.py` from the main Waveshare repo isn't compatible with the 10.85" driver. Replace it:
+```bash
+wget https://raw.githubusercontent.com/czuryk/Waveshare-ePaper-10.85-demo/main/lib/waveshare_epd/epdconfig.py -O ~/tide_app/lib/waveshare_epd/epdconfig.py
+```
+
 ## Tide data source
 
 Canadian Hydrographic Service IWLS API — station `64b6e5ec8027cb190816a0c0` (Point-du-Chêne, NB).
