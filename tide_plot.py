@@ -168,6 +168,7 @@ def get_tide_plot():
 
     banner = fetch_banner()
     if banner:
+        print(f"Displaying message: {banner!r}")
         fig.text(0.02, 0.97, banner, ha='left', va='top', fontsize=12, fontweight='bold')
 
     ax.spines['bottom'].set_visible(False)
