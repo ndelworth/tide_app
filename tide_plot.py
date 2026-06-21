@@ -9,6 +9,9 @@ from astral import LocationInfo
 from astral.sun import sun
 
 
+# --- Banner message (set to "" to disable) ---
+BANNER = "HAPPY FATHER'S DAY, DAD!"
+
 # --- Station config ---
 STATION_ID   = "64b6e5ec8027cb190816a0c0"
 STATION_NAME = "Point-du-Chêne"
@@ -148,6 +151,9 @@ def get_tide_plot():
 
     current_time_str = f"Updated: {now_local.strftime('%Y-%m-%d %I:%M %p').lstrip('0')}"
     fig.text(0.98, 0.97, current_time_str, ha='right', va='top', fontsize=10, fontweight='bold')
+
+    if BANNER:
+        fig.text(0.02, 0.97, BANNER, ha='left', va='top', fontsize=12, fontweight='bold')
 
     ax.spines['bottom'].set_visible(False)
     ax.spines['top'].set_visible(False)
