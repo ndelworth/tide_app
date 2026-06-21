@@ -2,7 +2,7 @@
 
 Displays tide height predictions for Point-du-Chêne, NB on a Waveshare 10.85" e-ink display connected to a Raspberry Pi.
 
-Every 10 minutes a cron job fetches data from the Canadian Hydrographic Service API, renders a 72-hour tide plot with matplotlib, and pushes it to the display.
+Every 10 minutes a tmux loop fetches data from the Canadian Hydrographic Service API, renders a 72-hour tide plot with matplotlib, and pushes it to the display.
 
 ## Files
 
@@ -12,11 +12,9 @@ Every 10 minutes a cron job fetches data from the Canadian Hydrographic Service 
 
 ## Setup on the Pi
 
-**1. Clone and install Python deps**
+**1. Clone the repo**
 ```bash
 git clone https://github.com/ndelworth/tide-clock.git ~/tide_app
-cd ~/tide_app
-uv sync
 ```
 
 **2. Install the Waveshare e-Paper library**
@@ -45,7 +43,7 @@ Detach with `Ctrl-B D`. To check on it later: `tmux attach -t tide`.
 
 Before shutting the Pi down, clear the screen to avoid ghosting:
 ```bash
-uv run python3 epaper_display.py --clear
+python3 epaper_display.py --clear
 sudo shutdown -h now
 ```
 

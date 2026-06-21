@@ -8,9 +8,9 @@ set -e
 cd "$(dirname "$0")"
 
 echo "[$(date)] Updating tide plot..."
-uv run python3 tide_plot.py
+python3 tide_plot.py
 
 echo "[$(date)] Sending to display..."
-uv run python3 epaper_display.py
+python3 epaper_display.py
 
 echo "[$(date)] Done."
