@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime, timedelta, timezone
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import os
 import numpy as np
 from scipy.signal import savgol_filter
@@ -202,7 +203,9 @@ def get_tide_plot():
         label.set_fontweight('bold')
 
     ax.yaxis.grid(True, linestyle=':', linewidth=0.8, color='black', alpha=0.7)
-    ax.set_xticks([])
+    ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter(''))
+    ax.tick_params(axis='x', direction='in', length=4, width=1)
     ax.set_ylabel("Water Level (m)")
     fig.subplots_adjust(left=0.055, right=0.995, top=0.92, bottom=0.02)
 
