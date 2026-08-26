@@ -28,6 +28,7 @@ NOW_LINE_WIDTH     = 5
 EXTREMA_MARKER_SIZE  = 5
 EXTREMA_LABEL_OFFSET = 0.07
 EXTREMA_FONT_SIZE    = 14
+EXTREMA_MIN_GAP      = timedelta(hours=3.5)  # merge extrema closer together than this (slack-water noise)
 TICK_FONT_SIZE       = 20
 
 # --- Banner message (for displaying fun secret messages, like "Happy Father's Day!") ---
@@ -74,15 +75,35 @@ def label_extrema(ax, local_times, levels):
     d1 = np.gradient(smoothed)
     extrema_indices = np.where(np.diff(np.sign(d1)) != 0)[0]
 
+    candidates = []
     for i in extrema_indices:
         window = slice(max(i - 30, 0), min(i + 30, len(levels_np)))
         local_extreme_idx = window.start + np.argmax(
             np.abs(levels_np[window] - np.mean(levels_np[window]))
         )
+        is_high = d1[i] > 0  # slope goes + → − = high tide
+        candidates.append((local_extreme_idx, is_high))
 
+    # Slack water near high/low tide often wobbles, producing a flicker of
+    # alternating-type extrema seconds/minutes apart — cluster candidates that
+    # fall close together in time and collapse each cluster to one label.
+    clusters = []
+    for idx, is_high in candidates:
+        if clusters and local_times[idx] - local_times[clusters[-1][-1][0]] < EXTREMA_MIN_GAP:
+            clusters[-1].append((idx, is_high))
+        else:
+            clusters.append([(idx, is_high)])
+
+    merged = []
+    for cluster in clusters:
+        num_high = sum(1 for _, is_high in cluster if is_high)
+        is_high = num_high >= len(cluster) - num_high
+        idx = (max if is_high else min)(cluster, key=lambda c: levels[c[0]])[0]
+        merged.append((idx, is_high))
+
+    for local_extreme_idx, is_high in merged:
         t = local_times[local_extreme_idx]
         v = levels[local_extreme_idx]
-        is_high = d1[i] > 0  # slope goes + → − = high tide
 
         ax.plot(t, v, 'ko', markersize=EXTREMA_MARKER_SIZE, zorder=4)
         ax.text(
