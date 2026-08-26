@@ -182,9 +182,7 @@ def get_tide_plot():
 
     ax.axvline(now_local, color="black", linestyle="--", linewidth=NOW_LINE_WIDTH, alpha=0.8, zorder=4)
 
-    ax.set_title(f"{STATION_NAME} Tides", fontsize=14, fontweight='bold')
-
-    current_time_str = f"Updated: {now_local.strftime('%Y-%m-%d %I:%M %p').lstrip('0')}"
+    current_time_str = f"Updated: {now_local.strftime('%a %Y-%m-%d %I:%M %p').lstrip('0')}"
     fig.text(0.98, 0.97, current_time_str, ha='right', va='top', fontsize=10, fontweight='bold')
 
     banner = fetch_banner()
@@ -206,7 +204,7 @@ def get_tide_plot():
     ax.yaxis.grid(True, linestyle=':', linewidth=0.8, color='black', alpha=0.7)
     ax.set_xticks([])
     ax.set_ylabel("Water Level (m)")
-    fig.subplots_adjust(left=0.055, right=0.995, top=0.88, bottom=0.02)
+    fig.subplots_adjust(left=0.055, right=0.995, top=0.92, bottom=0.02)
 
     os.makedirs('plots', exist_ok=True)
     filename = f'plots/{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
