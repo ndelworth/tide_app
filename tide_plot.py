@@ -20,8 +20,8 @@ Y_MIN   = 0.3
 Y_MAX   = 2.0
 Y_TICKS = [0.6, 1.0, 1.4, 1.8]
 
-# --- Plot styling — tuned for the Waveshare 10.85" display (1360×480) ---
-FIGURE_SIZE        = (12, 5)
+# --- Plot styling — tuned for the Waveshare 10.85" display (1360×480, 259.76×91.68mm) ---
+FIGURE_SIZE        = (14.17, 5)
 PLOT_DPI           = 150
 TIDE_LINE_WIDTH    = 10
 NOW_LINE_WIDTH     = 5
