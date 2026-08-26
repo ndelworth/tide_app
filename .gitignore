@@ -7,3 +7,4 @@ __pycache__/
 lib/waveshare_epd/
 .DS_Store
 config.py
+case

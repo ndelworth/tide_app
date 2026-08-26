@@ -176,6 +176,7 @@ def get_tide_plot():
     ax.spines['right'].set_visible(False)
 
     ax.set_ylim(Y_MIN, Y_MAX)
+    ax.set_xlim(local_times[0], local_times[-1])
     ax.set_yticks(Y_TICKS)
     ax.tick_params(axis='y', labelsize=TICK_FONT_SIZE)
     for label in ax.get_yticklabels():
@@ -184,7 +185,7 @@ def get_tide_plot():
     ax.yaxis.grid(True, linestyle=':', linewidth=0.8, color='black', alpha=0.7)
     ax.set_xticks([])
     ax.set_ylabel("Water Level (m)")
-    plt.tight_layout()
+    fig.subplots_adjust(left=0.055, right=0.995, top=0.88, bottom=0.02)
 
     os.makedirs('plots', exist_ok=True)
     filename = f'plots/{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.png'
