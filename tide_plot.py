@@ -153,10 +153,13 @@ def shade_day_night(ax, local_times, local_tz):
         if night_start_2 < night_end_2:
             ax.axvspan(night_start_2, night_end_2, color="black", alpha=0.15, zorder=0)
 
-        # Label the daytime (white) span with the day of week
+        # Label the daytime (white) span with the day of week, but only if at
+        # least half of that day's daylight is actually visible in the plot
         day_span_start = max(sunrise, start_time)
         day_span_end   = min(sunset, end_time)
-        if day_span_start < day_span_end:
+        visible_daylight = max(day_span_end - day_span_start, timedelta(0))
+        full_daylight     = sunset - sunrise
+        if visible_daylight >= full_daylight / 2:
             label_time = day_span_start + (day_span_end - day_span_start) / 2
             ax.text(
                 label_time,
