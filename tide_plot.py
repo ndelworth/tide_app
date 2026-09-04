@@ -167,7 +167,7 @@ def shade_day_night(ax, local_times, local_tz):
                 fontsize=DOW_FONT_SIZE,
                 fontweight='bold',
                 color='gray',
-                alpha=0.75,
+                alpha=1,
                 zorder=1,
             )
 
