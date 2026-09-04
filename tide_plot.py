@@ -31,6 +31,8 @@ EXTREMA_LABEL_OFFSET = 0.07
 EXTREMA_FONT_SIZE    = 14
 EXTREMA_MIN_GAP      = timedelta(hours=3.5)  # merge extrema closer together than this (slack-water noise)
 TICK_FONT_SIZE       = 20
+DOW_FONT_SIZE        = 44
+DOW_LABEL_Y          = Y_MAX - 0.12  # near top of plot, within the white (daytime) band
 
 # --- Banner message (for displaying fun secret messages, like "Happy Father's Day!") ---
 # BANNER_URL is loaded from config.py (not committed to git).
@@ -150,6 +152,24 @@ def shade_day_night(ax, local_times, local_tz):
         night_end_2   = min(day_end, end_time)
         if night_start_2 < night_end_2:
             ax.axvspan(night_start_2, night_end_2, color="black", alpha=0.15, zorder=0)
+
+        # Label the daytime (white) span with the day of week
+        day_span_start = max(sunrise, start_time)
+        day_span_end   = min(sunset, end_time)
+        if day_span_start < day_span_end:
+            label_time = day_span_start + (day_span_end - day_span_start) / 2
+            ax.text(
+                label_time,
+                DOW_LABEL_Y,
+                current_day.strftime("%a").upper(),
+                ha='center',
+                va='top',
+                fontsize=DOW_FONT_SIZE,
+                fontweight='bold',
+                color='gray',
+                alpha=0.75,
+                zorder=1,
+            )
 
         current_day += timedelta(days=1)
 
