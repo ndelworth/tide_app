@@ -32,7 +32,7 @@ EXTREMA_FONT_SIZE    = 14
 EXTREMA_MIN_GAP      = timedelta(hours=3.5)  # merge extrema closer together than this (slack-water noise)
 TICK_FONT_SIZE       = 20
 DOW_FONT_SIZE        = 44
-DOW_LABEL_Y          = Y_MAX - 0.12  # near top of plot, within the white (daytime) band
+DOW_LABEL_Y          = Y_MAX - 0.03  # near top of plot, within the white (daytime) band
 
 # --- Banner message (for displaying fun secret messages, like "Happy Father's Day!") ---
 # BANNER_URL is loaded from config.py (not committed to git).
